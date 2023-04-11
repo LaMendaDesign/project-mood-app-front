@@ -1,34 +1,52 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import './App.css'
+import { Box, Card, CardContent, CardHeader, Container, CssBaseline, FormControlLabel, FormGroup, PaletteMode, Switch, ThemeProvider, Typography, createTheme } from "@mui/material";
+import React, { useState } from "react";
+import "./App.css";
+import { getDesignTokens } from "./theme/theme";
 
-function App() {
-  const [count, setCount] = useState(0)
+export default function App() {
+  // The light theme is used by default
+  const [colorMode, setColorMode] = useState<PaletteMode>("light");
+
+  const theme = React.useMemo(
+    () => createTheme(getDesignTokens(colorMode)),
+    [colorMode]
+  );
+
+  // This function is triggered when the Switch component is toggled
+  const changeTheme = () => {
+    setColorMode((prevMode) => (prevMode == "light" ? "dark" : "light"));
+  };
 
   return (
-    <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </div>
-  )
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
+      <Container>
+        <div className="App">
+          <Box component="div" p={5}></Box>
+          <Card>
+            <CardHeader
+              action={
+                <FormGroup>
+                  <FormControlLabel
+                    control={
+                      <Switch checked={colorMode === 'dark'} onChange={changeTheme} />
+                    }
+                    label="Dark Theme"
+                  />
+                </FormGroup>
+              }
+            />
+            <CardContent>
+              <Typography variant="h3" component="h3">
+                I fucking did iiiiittt
+              </Typography>
+              <Typography variant="body1">
+                {colorMode} Mode is On
+              </Typography>
+            </CardContent>
+          </Card>
+        </div>
+      </Container>
+    </ThemeProvider>
+  );
 }
-
-export default App
