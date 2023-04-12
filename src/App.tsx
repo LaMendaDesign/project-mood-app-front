@@ -1,7 +1,14 @@
-import { Box, Card, CardContent, CardHeader, Container, CssBaseline, FormControlLabel, FormGroup, PaletteMode, Switch, ThemeProvider, Typography, createTheme } from "@mui/material";
+import {
+  Container,
+  CssBaseline,
+  PaletteMode,
+  Switch,
+  ThemeProvider,
+  createTheme,
+} from "@mui/material";
 import React, { useState } from "react";
-import "./App.css";
-import { getDesignTokens } from "./theme/theme";
+import YourEntries from "./pages/YourEntries";
+import { getDesignTokens } from "./assets/theme/theme";
 
 export default function App() {
   // The light theme is used by default
@@ -20,31 +27,12 @@ export default function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
+
+      <span>Dark mode</span><Switch checked={colorMode === "dark"} onChange={changeTheme} />
+
       <Container>
         <div className="App">
-          <Box component="div" p={5}></Box>
-          <Card>
-            <CardHeader
-              action={
-                <FormGroup>
-                  <FormControlLabel
-                    control={
-                      <Switch checked={colorMode === 'dark'} onChange={changeTheme} />
-                    }
-                    label="Dark Theme"
-                  />
-                </FormGroup>
-              }
-            />
-            <CardContent>
-              <Typography variant="h3" component="h3">
-                I fucking did iiiiittt
-              </Typography>
-              <Typography variant="body1">
-                {colorMode} Mode is On
-              </Typography>
-            </CardContent>
-          </Card>
+          <YourEntries />
         </div>
       </Container>
     </ThemeProvider>
